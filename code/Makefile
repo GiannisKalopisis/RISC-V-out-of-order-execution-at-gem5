@@ -8,7 +8,7 @@ AR=$(CROSS_COMPILE)ar
 all: daxpy
 
 daxpy: daxpy.cpp Makefile
-	$(CC) $(CFLAGS) daxpy.cpp -o daxpy
+	$(CC) $(CFLAGS) daxpy.cpp m5op.S
 
 clean:
 	rm -rf daxpy

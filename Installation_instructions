@@ -1,0 +1,22 @@
+--- Install Dependencies ---
+sudo apt install build-essential git m4 scons zlib1g zlib1g-dev libprotobuf-dev protobuf-compiler libprotoc-dev libgoogle-perftools-dev python3-dev libboost-all-dev pkg-config
+pip install pydot
+
+--- Download gem5 ---
+git clone https://gem5.googlesource.com/public/gem5
+
+--- Update and install RISCV for gcc and g++ ---
+sudo apt update
+sudo apt install gcc-riscv64-linux-gnu g++-riscv64-linux-gnu
+riscv64-linux-gnu-gcc --version
+riscv64-linux-gnu-g++ --version
+
+--- Build gem5 (takes time) ---
+cd path/to/gem5
+scons build/RISCV/gem5.opt -j 4
+
+--- Execute given code ---
+ARCH=riscv64 CROSS_COMPILE=riscv64-linux-gnu- make -f Makefile
+./build/RISCV/gem5.opt configs/example/se.py --cpu-type=MinorCPU --cmd=../RISC-V-out-of-order-execution-at-gem5/code/a.out --caches	// in-order-pipeline
+./build/RISCV/gem5.opt configs/example/se.py --cpu-type=O3CPU --cmd=../RISC-V-out-of-order-execution-at-gem5/code/a.out --caches		//out-of-order-pipeline
+
